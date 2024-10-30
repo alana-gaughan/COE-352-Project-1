@@ -148,3 +148,104 @@ for matrix in matrix_list:
     print(f'My Condition Number: {my_cond}\n')
     print(f'Numpy Condition Number: {np_cond}\n')
 
+
+# Write MATLAB or PYTHON software that will calculate
+# (1) the equilibrium displacements,
+# (2) the internal stresses and
+# (3) the elongations  of a spring/mass system using the 3 steps discussed in class and in the book.
+# Solve the force balance first, then back-calculate the elongation and internal stress vectors using the displacements.
+# Your code should be created in a general way where the user will input the following:
+# (1) the number of springs/masses,
+# (2) the spring constants for each spring,
+# (3) the masses,
+# (4) and which boundary condition to apply. Your code should allow the user to apply one or two fixed ends.
+# For this project, you will need to solve Ku=f. You will calculate the condition number of K by
+# (1) calculating and printing the singular values (and eigenvalues) using YOUR SVD algorithm, and
+# (2) calculating and printing a l2-condition number.  Do not use a software call to calculate a condition number.
+# USE YOUR SVD ROUTINE TO SOLVE THE KU=F SYSTEM!
+# Lastly, examine and discuss what happens when two free ends are used as boundary conditions
+
+def spring_system(spring_constants, masses, fixed_ends=['fixed', 'fixed']):
+    # write A matrix
+    # write C matrix
+    num_springs = len(spring_constants)
+    num_masses = len(masses)
+    num_fixed = fixed_ends.count('fixed')
+
+    # check user inputs are consistent
+    if num_fixed == 2:
+        if num_masses != (num_springs - 1):
+            return 'Error: Inconsistent number of springs + masses for two fixed ends'
+    elif num_fixed == 1:
+        if num_masses != num_springs:
+            return 'Error: Inconsistent number of springs + masses for one fixed end'
+    elif num_fixed == 0:
+        if num_masses != (num_springs + 1):
+            return 'Error: Inconsistent number of springs + masses for two fixed end'
+    else:
+        return 'Error: Input either 0, 1, or 2 for number of fixed ends'
+
+    f = np.zeros(num_masses)
+    for i in range(num_masses):
+        f[i] = masses[i]*9.81
+
+    # write C matrix
+    C = np.zeros((num_springs, num_springs))
+    for i in range(len(spring_constants)):
+        C[i, i] = spring_constants[i]
+
+    # write A matrix
+    A = np.zeros((num_springs, num_masses))
+
+    if fixed_ends[0] == 'fixed':
+        for i in range(num_springs):
+            for j in range(num_masses):
+                if i == j:
+                    A[i, j] = 1
+                if i == (j+1):
+                    A[i, j] = -1
+    else:
+        for i in range(num_springs):
+            for j in range(num_masses):
+                if i == j:
+                    A[i, j] = -1
+                if i == (j-1):
+                    A[i, j] = 1
+
+    # solve system
+    K = np.matmul(np.matmul(A.T, C), A)
+    # find K^-1 using SVD calculation
+    K_inv, K_cond = find_SVD(K)[3:]
+    # find displacements
+    u = np.matmul(K_inv, f)
+    # find elongation
+    e = np.matmul(A, u)
+    # find internal stresses
+    w = np.matmul(C, e)
+
+    return u, e, w, K_cond
+
+
+# case 1: two fixed ends
+spring_constants = [1, 1, 1, 1]
+masses = [1, 1, 1]
+bc = ['fixed', 'fixed']
+print(spring_system(spring_constants, masses, bc))
+
+# case 2: one fixed end, bottom end free
+spring_constants = [1, 1, 1]
+masses = [1, 1, 1]
+bc = ['fixed', 'free']
+print(spring_system(spring_constants, masses, bc))
+
+# case 3: one fixed end, top end free
+spring_constants = [1, 1, 1]
+masses = [1, 1, 1]
+bc = ['free', 'fixed']
+print(spring_system(spring_constants, masses, bc))
+
+# case 4: two free ends
+spring_constants = [1, 1]
+masses = [1, 1, 1]
+bc = ['free', 'free']
+print(spring_system(spring_constants, masses, bc))

@@ -3,8 +3,6 @@
 ## Results
 When the code for SVD decomposition is run, it compares my find_SVD() function with functions from various other Python libraries. It tests the results on 3 matrices of 3 different sizes. Below is the reformatted printed output.
 
-Comparing my Function vs SciPy Routines:
-
 ```
 Matrix:
 [[ 3  3  2]
@@ -33,7 +31,8 @@ Scipy Inverse:
 
 My Condition Number: 1.93515434599516
 Numpy Condition Number: 1.9351543459951601
-
+```
+```
 Matrix:
 [[ 3  3]
  [ 2  3]
@@ -60,7 +59,8 @@ Scipy Inverse:
 
 My Condition Number: 1.93515434599516
 Numpy Condition Number: 1.9351543459951595
-
+```
+```
 Matrix:
 [[3 4]
  [0 5]]

@@ -5,19 +5,15 @@ When the code for SVD decomposition is run, it compares my find_SVD() function w
 
 Comparing my Function vs SciPy Routines:
 
+
+
 Matrix:
 [[ 3  3  2]
-
  [ 2  3 -2]]
-
  
 My SVD:
 U=[[ 0.7815437  0.6238505] S=[[5.54801894 0.         0.        ] V=[[ 0.64749817  0.10759258  0.75443354]
-
-
    [ 0.6238505 -0.7815437]]   [0.         2.86696457 0.        ]]   [ 0.7599438  -0.16501062 -0.62869461]
-
-   
                                                                     [ 0.05684667  0.9804057  -0.18860838]]
 
 
@@ -88,3 +84,6 @@ Scipy Inverse:
 
 My Condition Number: 2.9999999999999987
 Numpy Condition Number: 3.000000000000001
+
+
+

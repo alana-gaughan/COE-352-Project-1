@@ -82,8 +82,8 @@ Scipy Inverse:
  [-1.98965378e-17  2.00000000e-01]]
 
 My Condition Number: 2.9999999999999987
-```
 Numpy Condition Number: 3.000000000000001
+```
 
 
 

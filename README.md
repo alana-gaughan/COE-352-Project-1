@@ -1,5 +1,12 @@
 # COE-352-Project-1
 
+## Summary
+This project has two parts. The first part is to create a function that calculates the singular value decomposition for any mxn matrix. The second part is to solve an equilibrium spring mass system with linear algebra.
+
+For part one, the function takes in an mxn numpy array and returns the 3 matrices that make up the singular value decomposition (U, V, Sigma) such that A = U * Sigma * V^T. It also returns the matrix inverse and the matrixes condition number. This functionality is used later in part two.
+
+In part two, we imagined a spring mass system optionally connected to the the cieling and/or the floor. The function takes in a list of masses, a list of spring constants and a list of boundary conditions. I made the assumption that there wouldn't be a spring which connected to empty air, so I didn't include the user input for number of masses/springs as it would be specified by the mass and spring number vector. Then the function is able to calculate displacement of masses, elongation of the springs, and internal stresses. It also returns the condition number of the system. 
+
 ## Results
 When the code for SVD decomposition is run, it compares my find_SVD() function with functions from various other Python libraries. It tests the results on 3 matrices of 3 different sizes. Below is the reformatted printed output.
 

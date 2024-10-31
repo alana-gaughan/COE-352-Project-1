@@ -26,7 +26,7 @@ def find_SVD(matrix):
     V = nxn numpy array
     Sigma = mxn numpy array
     inverse = nxm numpy array
-    condition_num = float
+    condition_number = float
     """
     m, n = matrix.shape
 
@@ -171,6 +171,10 @@ def spring_system(spring_constants, masses, fixed_ends=['fixed', 'fixed']):
     num_springs = len(spring_constants)
     num_masses = len(masses)
     num_fixed = fixed_ends.count('fixed')
+    num_free = fixed_ends.count('free')
+
+    if num_free + num_fixed != len(fixed_ends):
+        return 'Error: Fixed ends parameter should only have "fixed" or "free".'
 
     # check user inputs are consistent
     if num_fixed == 2:
@@ -230,22 +234,33 @@ def spring_system(spring_constants, masses, fixed_ends=['fixed', 'fixed']):
 spring_constants = [1, 1, 1, 1]
 masses = [1, 1, 1]
 bc = ['fixed', 'fixed']
-print(spring_system(spring_constants, masses, bc))
+print('\nCase 1: Two fixed ends:')
+u, e, w, K_cond = spring_system(spring_constants, masses, bc)
+print(f'Displacement of masses = {u}\nElongation of springs = {e}\nInternal Stresses = {w}\nCondition Number = {K_cond}')
 
 # case 2: one fixed end, bottom end free
 spring_constants = [1, 1, 1]
 masses = [1, 1, 1]
 bc = ['fixed', 'free']
-print(spring_system(spring_constants, masses, bc))
+print('\nCase 2: Top end fixed, bottom end free:')
+u, e, w, K_cond = spring_system(spring_constants, masses, bc)
+print(f'Displacement of masses = {u}\nElongation of springs = {e}\nInternal Stresses = {w}\nCondition Number = {K_cond}')
+
 
 # case 3: one fixed end, top end free
 spring_constants = [1, 1, 1]
 masses = [1, 1, 1]
 bc = ['free', 'fixed']
-print(spring_system(spring_constants, masses, bc))
+print('\nCase 3: Top end free, bottom end fixed:')
+u, e, w, K_cond = spring_system(spring_constants, masses, bc)
+print(f'Displacement of masses = {u}\nElongation of springs = {e}\nInternal Stresses = {w}\nCondition Number = {K_cond}')
+
 
 # case 4: two free ends
 spring_constants = [1, 1]
 masses = [1, 1, 1]
 bc = ['free', 'free']
-print(spring_system(spring_constants, masses, bc))
+print('\nCase 4: Two free ends:')
+u, e, w, K_cond = spring_system(spring_constants, masses, bc)
+print(f'Displacement of masses = {u}\nElongation of springs = {e}\nInternal Stresses = {w}\nCondition Number = {K_cond}')
+

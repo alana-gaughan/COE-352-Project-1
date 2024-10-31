@@ -84,7 +84,7 @@ Scipy Inverse:
 My Condition Number: 2.9999999999999987
 Numpy Condition Number: 3.000000000000001
 ```
-For the next problem, we solved the equilibrium spring mass system with different boundary conditions. All cases below have all three massed = 1, and all spring constants = 1 as well (though different cases have a different number of springs so that the problem makes sense). Below are the properly formatted results:
+For the next problem, we solved the equilibrium spring mass system with different boundary conditions. All cases below have all three masses = 1, and all spring constants = 1 as well (though different cases have a different number of springs so that the problem makes sense). Below are the properly formatted results:
 ```
 Case 1: Two fixed ends:
 Displacement of masses = [14.715 19.62  14.715]
